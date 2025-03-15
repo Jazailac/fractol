@@ -3,7 +3,7 @@
 #include "minilibx/mlx.h"
 
 
-int	mandelbrot_iter(t_complex c)
+int	mandelbrot_iter(t_complex c, t_fractal *fractal)
 {
 	t_complex	z;
 	int			i;
@@ -13,7 +13,7 @@ int	mandelbrot_iter(t_complex c)
 	z.imag = 0;
 	i = 0;
 	
-	while (i < MAX_ITER)
+	while (i < fractal->max_iterations)
 	{
 		if ((z.real * z.real + z.imag * z.imag) > 4.0)
 			break;
@@ -63,10 +63,13 @@ void init_fractal(t_fractal *fractal)
         free(fractal->mlx);
         return;
     }
+    fractal->shift_x = 0.0;
+    fractal->shift_y = 0.0;
     fractal->min.real = -2.0;
-	fractal->min.imag = -2.0;
-	fractal->max.real = 2.0;
-	fractal->max.imag = 2.0;
+	fractal->min.imag = -1.5;
+	fractal->max.real = 1.0;
+	fractal->max.imag = 1.5;
+    fractal->max_iterations = 278;
     // Set up event hooks
     // event_init(fractal);
 }
@@ -98,11 +101,11 @@ void render_fractal(t_fractal *fractal)
             cmplx = handle_pixel(x, y, fractal);
             if (ft_strncmp(fractal->name, "mandelbrot", 10) == 0)
             {
-                iterations = mandelbrot_iter(cmplx);
+                iterations = mandelbrot_iter(cmplx, fractal);
             }
             else 
                 iterations = 0;
-            put_pixel(&fractal->img, x, y, create_color(iterations));
+            put_pixel(&fractal->img, x, y, create_color(iterations, fractal));
             x++;
         }
         y++;

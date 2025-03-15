@@ -11,7 +11,6 @@
 #define ERROR_MESSAGE "[Usage] :\n\t ./fractol {set} {parameters (for julia)} \n [available sets] :\n\t mandelbrot \n\t julia {optional parameters}\n"
 #define WIDTH 500
 #define HEIGHT 500
-#define MAX_ITER 150
 
 
 typedef struct s_complex
@@ -37,14 +36,18 @@ typedef struct s_fractal
     char *name;
     t_complex min;
     t_complex max;
+    int max_iterations;
+    double shift_x;
+    double shift_y;
 
 }t_fractal;
 
 void init_fractal(t_fractal *fractal);
 void	put_pixel(t_img *img, int x, int y, int color);
 void render_fractal(t_fractal *fractal);
-int	create_color(int iterations);
+int	create_color(int iterations, t_fractal *fractal);
 t_complex handle_pixel(int x, int y, t_fractal *fractal);
+int	mandelbrot_iter(t_complex c, t_fractal *fractal);
 
 
 #endif
