@@ -69,7 +69,7 @@ void init_fractal(t_fractal *fractal)
 	fractal->min.imag = -1.5;
 	fractal->max.real = 1.0;
 	fractal->max.imag = 1.5;
-    fractal->max_iterations = 278;
+    fractal->max_iterations = 278;  
     // Set up event hooks
     // event_init(fractal);
 }

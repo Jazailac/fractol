@@ -47,7 +47,9 @@ void	put_pixel(t_img *img, int x, int y, int color);
 void render_fractal(t_fractal *fractal);
 int	create_color(int iterations, t_fractal *fractal);
 t_complex handle_pixel(int x, int y, t_fractal *fractal);
+void zoom(t_fractal *fractal, int mouse_x, int mouse_y, double zoom_factor);
 int	mandelbrot_iter(t_complex c, t_fractal *fractal);
+int handle_mouse(int button, int x, int y, t_fractal *fractal);
 
 
 #endif
