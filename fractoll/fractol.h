@@ -9,8 +9,8 @@
 #include <stdlib.h>
 
 #define ERROR_MESSAGE "[Usage] :\n\t ./fractol {set} {parameters (for julia)} \n [available sets] :\n\t mandelbrot \n\t julia {optional parameters}\n"
-#define WIDTH 800
-#define HEIGHT 800
+#define WIDTH 200   
+#define HEIGHT 200  
 
 
 typedef struct s_complex
@@ -38,8 +38,8 @@ typedef struct s_fractal
     t_complex max;
     t_complex julia;
     int max_iterations;
-    double shift_x;
-    double shift_y;
+    double zoom_x;
+    double zoom_y;
 
 }t_fractal;
 

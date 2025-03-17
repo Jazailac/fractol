@@ -85,8 +85,8 @@ void init_fractal(t_fractal *fractal)
         free(fractal->mlx);
         return;
     }
-    fractal->shift_x = 0.0;
-    fractal->shift_y = 0.0;
+    fractal->zoom_x = 0.8;
+    fractal->zoom_y = 1.2;
     fractal->min.real = -2.0;
 	fractal->min.imag = -2.0;
 	fractal->max.real = 2.0;

@@ -6,12 +6,12 @@ int handle_mouse(int button, int x, int y, t_fractal *fractal)
     complex = handle_pixel(x, y, fractal);
     if (button == 1)
     {
-        zoom(fractal, x, y, 0.5);
+        zoom(fractal, x, y, fractal->zoom_x);
         render_fractal(fractal);
     }
     else if (button == 2)
     {
-        zoom(fractal, x, y, 1.5);
+        zoom(fractal, x, y,fractal->zoom_y);
         render_fractal(fractal);
     }
     return (0);
@@ -59,4 +59,8 @@ void zoom(t_fractal *fractal, int mouse_x, int mouse_y, double zoom_factor)
     fractal->min.imag = mouse_pos.imag - (mouse_pos.imag - fractal->min.imag) * zoom_factor;
     fractal->max.real = mouse_pos.real + (fractal->max.real - mouse_pos.real) * zoom_factor;
     fractal->max.imag = mouse_pos.imag + (fractal->max.imag - mouse_pos.imag) * zoom_factor;
+    if (zoom_factor < 1.0 && fractal->max_iterations < 300)
+        fractal->max_iterations *= 1.2;
+    else if (zoom_factor > 1.0 && fractal->max_iterations > 75)
+        fractal->max_iterations *= 0.85;
 }
