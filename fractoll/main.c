@@ -14,7 +14,6 @@ int main(int ac, char **av)
     }
     t_fractal fractal;
     
-    ft_putnbr_fd(getpid(), 1);
     ft_memset(&fractal, 0, sizeof(t_fractal));
     if (((ft_strncmp(av[1], "mandelbrot", 10) == 0))
             || (ft_strncmp(av[1], "julia", 5) == 0 && ac >= 2))
@@ -30,9 +29,9 @@ int main(int ac, char **av)
         // then i need to render the fractal 
         render_fractal(&fractal);
         //handle events
+        mlx_mouse_hook(fractal.window, handle_mouse, &fractal);
         mlx_key_hook(fractal.window, handle_key, &fractal);
         //handle mouse
-        mlx_mouse_hook(fractal.window, handle_mouse, &fractal);
         //mlx loop
         mlx_loop(fractal.mlx);
     }

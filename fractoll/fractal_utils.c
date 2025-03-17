@@ -3,6 +3,13 @@
 #include "minilibx/mlx.h"
 
 
+void square_comlex(double temp, t_complex *z, t_complex *c)
+{
+    temp = z->real * z->real - z->imag * z->imag + c->real;
+		z->imag = 2.0 * z->real * z->imag + c->imag;
+		z->real = temp;
+}
+
 int	mandelbrot_iter(t_complex c, t_fractal *fractal)
 {
 	t_complex	z;
@@ -12,17 +19,32 @@ int	mandelbrot_iter(t_complex c, t_fractal *fractal)
 	z.real = 0;
 	z.imag = 0;
 	i = 0;
-	
+	temp = 0.0;
 	while (i < fractal->max_iterations)
 	{
 		if ((z.real * z.real + z.imag * z.imag) > 4.0)
 			break;
-		temp = z.real * z.real - z.imag * z.imag + c.real;
-		z.imag = 2.0 * z.real * z.imag + c.imag;
-		z.real = temp;
+        square_comlex(temp, &z, &c);
 		i++;
 	}
 	return (i);
+}
+
+int julia_iter(t_complex z, t_complex c, t_fractal *fractal)
+{
+    int i;
+    int temp;
+
+    i = 0;
+    temp = 0.0;
+    while (i < fractal->max_iterations)
+    {
+        if ((z.imag * z.imag + z.real * z.real) > 4)
+            break;
+        square_comlex(temp, &z, &c);
+        i++; 
+    }
+    return (i);
 }
 
 void init_fractal(t_fractal *fractal)
@@ -66,10 +88,12 @@ void init_fractal(t_fractal *fractal)
     fractal->shift_x = 0.0;
     fractal->shift_y = 0.0;
     fractal->min.real = -2.0;
-	fractal->min.imag = -1.5;
-	fractal->max.real = 1.0;
-	fractal->max.imag = 1.5;
-    fractal->max_iterations = 278;  
+	fractal->min.imag = -2.0;
+	fractal->max.real = 2.0;
+	fractal->max.imag = 2.0;
+    fractal->max_iterations = 100;  
+    fractal->julia.real = -0.512511498387847167;
+    fractal->julia.imag = 0.521295573094847167;
     // Set up event hooks
     // event_init(fractal);
 }
@@ -103,8 +127,12 @@ void render_fractal(t_fractal *fractal)
             {
                 iterations = mandelbrot_iter(cmplx, fractal);
             }
-            else 
-                iterations = 0;
+            else if (ft_strncmp(fractal->name, "julia", 5) == 0)
+            {
+                cmplx = handle_pixel(x, y, fractal);
+                iterations = julia_iter(cmplx, fractal->julia, fractal);
+
+            }
             put_pixel(&fractal->img, x, y, create_color(iterations, fractal));
             x++;
         }

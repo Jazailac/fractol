@@ -2,13 +2,17 @@
 
 int handle_mouse(int button, int x, int y, t_fractal *fractal)
 {
-    if (button == 4)
+    t_complex complex;
+    complex = handle_pixel(x, y, fractal);
+    if (button == 1)
     {
-        zoom(fractal, x, y, 0.9);
+        zoom(fractal, x, y, 0.5);
+        render_fractal(fractal);
     }
-    else if (button == 5)
+    else if (button == 2)
     {
-        zoom(fractal, x, y, 1.1 );
+        zoom(fractal, x, y, 1.5);
+        render_fractal(fractal);
     }
     return (0);
 }
@@ -16,6 +20,9 @@ int handle_mouse(int button, int x, int y, t_fractal *fractal)
 
 int	handle_key(int keycode, t_fractal *fractal)
 {
+    int temp;
+
+    temp = 0;
     if (keycode == 53)
 	{
 		mlx_destroy_window(fractal->mlx, fractal->window);
@@ -23,29 +30,33 @@ int	handle_key(int keycode, t_fractal *fractal)
         free(fractal->mlx);
 		exit(0);
 	}
-    else if (keycode == 69)//to replace with +iterations keycode to zoom in
+    else if (keycode == 69)//to replace with +-iterations keycode to zoom in
     {
-        fractal->max_iterations += 30;
+        temp = fractal->max_iterations + 20;
+        if (temp <= 280)
+            fractal->max_iterations += 20;
+        render_fractal(fractal);
     }
     else if (keycode == 78)//to replace with -iterations keycode to zoom in
     {
-        fractal->max_iterations -= 30;
+        temp = fractal->max_iterations - 20;
+        if (temp >= -500 && temp <= 280)
+            fractal->max_iterations -= 20;
+        render_fractal(fractal);
     }
 	return (0);
 }
 
 void zoom(t_fractal *fractal, int mouse_x, int mouse_y, double zoom_factor)
 {
-    t_complex   center;
-    double new_range_real;
-    double new_range_imag;
+    t_complex   mouse_pos;
+    double range_real, range_imag;
 
-    center = handle_pixel(mouse_x, mouse_y, fractal);
-    new_range_imag = (fractal->max.imag - fractal->min.imag) * zoom_factor;
-    new_range_real = (fractal->max.real - fractal->min.real) * zoom_factor;
-    fractal->min.real = center.real - new_range_real / 2;
-    fractal->min.imag = center.imag - new_range_real / 2;
-    fractal->max.real = center.real + new_range_real / 2;
-    fractal->max.imag = center.imag + new_range_real / 2;
-    render_fractal(fractal);
+    mouse_pos = handle_pixel(mouse_x, mouse_y, fractal);
+    range_real = fractal->max.real - fractal->min.real;
+    range_imag = fractal->max.imag - fractal->min.imag;
+    fractal->min.real = mouse_pos.real - (mouse_pos.real - fractal->min.real) * zoom_factor;
+    fractal->min.imag = mouse_pos.imag - (mouse_pos.imag - fractal->min.imag) * zoom_factor;
+    fractal->max.real = mouse_pos.real + (fractal->max.real - mouse_pos.real) * zoom_factor;
+    fractal->max.imag = mouse_pos.imag + (fractal->max.imag - mouse_pos.imag) * zoom_factor;
 }
