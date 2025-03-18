@@ -9,8 +9,8 @@
 #include <stdlib.h>
 
 #define ERROR_MESSAGE "[Usage] :\n\t ./fractol {set} {parameters (for julia)} \n [available sets] :\n\t mandelbrot \n\t julia {optional parameters}\n"
-#define WIDTH 200   
-#define HEIGHT 200  
+#define WIDTH 300      
+#define HEIGHT 250    
 
 
 typedef struct s_complex
@@ -35,6 +35,7 @@ typedef struct s_fractal
     t_img img;
     char *name;
     t_complex min;
+    int color_shift;
     t_complex max;
     t_complex julia;
     int max_iterations;
@@ -46,11 +47,13 @@ typedef struct s_fractal
 void init_fractal(t_fractal *fractal);
 void	put_pixel(t_img *img, int x, int y, int color);
 void render_fractal(t_fractal *fractal);
-int	create_color(int iterations, t_fractal *fractal);
+int	create_color(int iterations, int max_iterations);
 t_complex handle_pixel(int x, int y, t_fractal *fractal);
 void zoom(t_fractal *fractal, int mouse_x, int mouse_y, double zoom_factor);
 int	mandelbrot_iter(t_complex c, t_fractal *fractal);
 int handle_mouse(int button, int x, int y, t_fractal *fractal);
+
+void square_complex(t_complex *z, t_complex *c);
 
 
 #endif

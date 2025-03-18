@@ -2,20 +2,60 @@
 
 int	handle_key(int keycode, t_fractal *fractal);
 
-int	create_color(int iterations, t_fractal *fractal)
+int	create_color(int iterations, int max_iterations)
 {
-	double	t;
+	double	ratio;
 	int		r;
 	int		g;
 	int		b;
-
-	if (iterations == fractal->max_iterations)
-		return (0);
-	t = (double)iterations / fractal->max_iterations;
-	r = (int)(9 * (1 - t) * t * t * t * 255);
-	g = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
-	b = (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
+	int		color_zones;
 	
+	// If the point is in the set, return black
+	if (iterations == max_iterations)
+		return (0x000000);
+	
+	// Create 20 distinct color zones for showing depth
+	color_zones = 20;
+	ratio = (double)iterations / max_iterations;
+	
+	// Color scheme that reveals depth through distinct but gradual changes
+	if (ratio < 0.16)
+	{
+		// Deep areas - dark blues
+		r = 0;
+		g = 0;
+		b = (int)(150 + ratio * 650);  // 150-255 range
+	}
+	else if (ratio < 0.42)
+	{
+		// Mid-deep areas - blue to cyan
+		r = 0;
+		g = (int)((ratio - 0.16) * 750);  // 0-255 range
+		b = 255;
+	}
+	else if (ratio < 0.6425)
+	{
+		// Mid areas - cyan to green
+		r = 0;
+		g = 255;
+		b = 255 - (int)((ratio - 0.42) * 1150);  // 255-0 range
+	}
+	else if (ratio < 0.8575)
+	{
+		// Shallow areas - green to yellow to orange
+		r = (int)((ratio - 0.6425) * 1150);  // 0-255 range
+		g = 255;
+		b = 0;
+	}
+	else
+	{
+		// Very shallow areas - orange to red
+		r = 255;
+		g = 255 - (int)((ratio - 0.8575) * 1800);  // 255-0 range
+		b = 0;
+	}
+	
+	// Combine RGB values into a single integer
 	return ((r << 16) | (g << 8) | b);
 }
 

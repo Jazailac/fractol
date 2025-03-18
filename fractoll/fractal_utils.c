@@ -3,11 +3,13 @@
 #include "minilibx/mlx.h"
 
 
-void square_comlex(double temp, t_complex *z, t_complex *c)
+void square_comlex(t_complex *z, t_complex *c)
 {
-    temp = z->real * z->real - z->imag * z->imag + c->real;
-		z->imag = 2.0 * z->real * z->imag + c->imag;
-		z->real = temp;
+    double temp;
+    
+    temp = z->real;
+    z->real = z->real * z->real - z->imag * z->imag + c->real;
+    z->imag = 2.0 * temp * z->imag + c->imag;
 }
 
 int	mandelbrot_iter(t_complex c, t_fractal *fractal)
@@ -24,7 +26,7 @@ int	mandelbrot_iter(t_complex c, t_fractal *fractal)
 	{
 		if ((z.real * z.real + z.imag * z.imag) > 4.0)
 			break;
-        square_comlex(temp, &z, &c);
+        square_comlex(&z, &c);
 		i++;
 	}
 	return (i);
@@ -41,7 +43,7 @@ int julia_iter(t_complex z, t_complex c, t_fractal *fractal)
     {
         if ((z.imag * z.imag + z.real * z.real) > 4)
             break;
-        square_comlex(temp, &z, &c);
+        square_comlex(&z, &c);
         i++; 
     }
     return (i);
@@ -87,13 +89,14 @@ void init_fractal(t_fractal *fractal)
     }
     fractal->zoom_x = 0.8;
     fractal->zoom_y = 1.2;
+    fractal->color_shift = 115;
     fractal->min.real = -2.0;
 	fractal->min.imag = -2.0;
 	fractal->max.real = 2.0;
 	fractal->max.imag = 2.0;
     fractal->max_iterations = 100;  
-    fractal->julia.real = -0.512511498387847167;
-    fractal->julia.imag = 0.521295573094847167;
+    fractal->julia.real = -0.8;
+    fractal->julia.imag = 0.156;
     // Set up event hooks
     // event_init(fractal);
 }
@@ -115,8 +118,21 @@ void render_fractal(t_fractal *fractal)
     int x;
     int y;
     t_complex cmplx;
+    int color_shift;
+    int color;
+    // int colors[8] = {
+    //     0xFF0000,  // Red
+    //     0xFF7F00,  // Orange
+    //     0xFFFF00,  // Yellow
+    //     0x00FF00,  // Green
+    //     0x0000FF,  // Blue
+    //     0x4B0082,  // Indigo
+    //     0x9400D3,  // Violet
+    //     0xFF00FF   // Magenta
+    // };
 
     y = 0;
+    color_shift = fractal->color_shift;
     while (y < HEIGHT)
     {
         x = 0;
@@ -133,7 +149,18 @@ void render_fractal(t_fractal *fractal)
                 iterations = julia_iter(cmplx, fractal->julia, fractal);
 
             }
-            put_pixel(&fractal->img, x, y, create_color(iterations, fractal));
+            if (iterations == fractal->max_iterations)
+                color = 0x000000;  // Points in the set are black
+            // else
+            //     color = colors[iterations % 8]; 
+            else
+            {
+                iterations = (iterations + color_shift) % 256;
+                color = (iterations * 7) % 256;  // Red
+                color = (color << 8) | ((iterations * 13) % 256);  // Green
+                color = (color << 8) | ((iterations * 5) % 256);   // Blue
+            }
+            put_pixel(&fractal->img, x, y, color);
             x++;
         }
         y++;
