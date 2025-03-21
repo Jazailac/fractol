@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/20 03:48:06 by jazailac          #+#    #+#             */
+/*   Updated: 2025/03/21 01:09:16 by jazailac         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FRACTOL_H
 #define FRACTOL_H
 
@@ -8,9 +20,9 @@
 #include <math.h>
 #include <stdlib.h>
 
-#define ERROR_MESSAGE "[Usage] :\n\t ./fractol {set} {parameters (for julia)} \n [available sets] :\n\t mandelbrot \n\t julia {optional parameters}\n"
-#define WIDTH 300      
-#define HEIGHT 250    
+#define ERROR_MESSAGE "[Usage] :\n\t ./fractol [1] for mandelbrot \n \t ./fractol [2] for julia +-({real}{imaginary})\n"
+#define WIDTH 200               
+#define HEIGHT 200    
 
 
 typedef struct s_complex
@@ -52,8 +64,9 @@ t_complex handle_pixel(int x, int y, t_fractal *fractal);
 void zoom(t_fractal *fractal, int mouse_x, int mouse_y, double zoom_factor);
 int	mandelbrot_iter(t_complex c, t_fractal *fractal);
 int handle_mouse(int button, int x, int y, t_fractal *fractal);
-
+double	ft_atof(char *str, double res);
 void square_complex(t_complex *z, t_complex *c);
-
+int cloe_window(t_fractal *fractal);
+void fill_fractal(t_fractal *fractal);
 
 #endif

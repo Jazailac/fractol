@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/20 03:48:10 by jazailac          #+#    #+#             */
+/*   Updated: 2025/03/21 00:37:29 by jazailac         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 int	handle_key(int keycode, t_fractal *fractal);
@@ -59,6 +71,27 @@ int	create_color(int iterations, int max_iterations)
 	return ((r << 16) | (g << 8) | b);
 }
 
+
+// int create_color(int iterations, int max_iterations)
+// {
+//     int color;
+//     int r, g, b;
+    
+//     // Black for points inside the set
+//     if (iterations == max_iterations)
+//         return (0x000000);
+    
+//     // Use a simple modulo-based color scheme with 3 components
+//     r = (iterations * 7) % 256;
+//     g = (iterations * 11) % 256;
+//     b = (iterations * 17) % 256;
+    
+//     // Combine RGB values into a single integer
+//     color = (r << 16) | (g << 8) | b;
+    
+//     return (color);
+// }
+
 void	put_pixel(t_img *img, int x, int y, int color)
 {
 	char	*dst;
@@ -67,11 +100,27 @@ void	put_pixel(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void event_init(t_fractal *fractal)
+double	ft_atof(char *str, double res)
 {
-	mlx_hook(fractal->window, 02, (1L<<0),handle_key, fractal);
-	//need to make handle_mouse();
-	// mlx_hook(fractal->window, 04, (1L<<2), handle_mouse, fractal);
-	mlx_hook(fractal->window, 05, (1L<<17), handle_key, fractal);
+	int	i;
+	int	sign;
+	int	divider;
 
+	i = -1;
+	res = 0;
+	sign = 1;
+	divider = 1;
+	if (str[++i] == '-')
+		sign = -1;
+	while (str[++i] && str[i] != '.')
+		res = res * 10 + str[i] - '0';
+	if (str[i++] == '.')
+	{
+		while (str[i])
+		{
+			res = res * 10 + str[i++] - '0';
+			divider *= 10;
+		}
+	}
+	return (res * sign / divider);
 }

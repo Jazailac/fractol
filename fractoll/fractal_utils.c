@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractal_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/20 03:48:02 by jazailac          #+#    #+#             */
+/*   Updated: 2025/03/21 00:37:07 by jazailac         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "LIBFT/libft.h"
 #include "fractol.h"
 #include "minilibx/mlx.h"
@@ -49,6 +61,22 @@ int julia_iter(t_complex z, t_complex c, t_fractal *fractal)
     return (i);
 }
 
+void fill_fractal(t_fractal *fractal)
+{
+    fractal->zoom_x = 0.8;
+    fractal->zoom_y = 1.2;
+    fractal->color_shift = 115;
+    fractal->min.real = -2.0;
+	fractal->min.imag = -2.0;
+	fractal->max.real = 2.0;
+	fractal->max.imag = 2.0;
+    fractal->max_iterations = 100;  
+    if (!fractal->julia.real)
+        fractal->julia.real = -0.8;
+    if (!fractal->julia.imag)
+        fractal->julia.imag = 0.156;
+}
+
 void init_fractal(t_fractal *fractal)
 {
     fractal->mlx = mlx_init();
@@ -87,16 +115,7 @@ void init_fractal(t_fractal *fractal)
         free(fractal->mlx);
         return;
     }
-    fractal->zoom_x = 0.8;
-    fractal->zoom_y = 1.2;
-    fractal->color_shift = 115;
-    fractal->min.real = -2.0;
-	fractal->min.imag = -2.0;
-	fractal->max.real = 2.0;
-	fractal->max.imag = 2.0;
-    fractal->max_iterations = 100;  
-    fractal->julia.real = -0.8;
-    fractal->julia.imag = 0.156;
+    fill_fractal(fractal);
     // Set up event hooks
     // event_init(fractal);
 }
@@ -150,16 +169,18 @@ void render_fractal(t_fractal *fractal)
 
             }
             if (iterations == fractal->max_iterations)
-                color = 0x000000;  // Points in the set are black
+                color = 0x000000;
             // else
-            //     color = colors[iterations % 8]; 
+            //     color = colors[iterations  % 8]; 
+            // else
+            // {
+            //     iterations = (iterations + color_shift) % 256;
+            //     color = (iterations * 7) % 256;  // Red
+            //     color = (color << 8) | ((iterations * 13) % 256);  // Green
+            //     color = (color << 8) | ((iterations * 5) % 256);   // Blue
+            // }
             else
-            {
-                iterations = (iterations + color_shift) % 256;
-                color = (iterations * 7) % 256;  // Red
-                color = (color << 8) | ((iterations * 13) % 256);  // Green
-                color = (color << 8) | ((iterations * 5) % 256);   // Blue
-            }
+                color = create_color(iterations, fractal->max_iterations);
             put_pixel(&fractal->img, x, y, color);
             x++;
         }
