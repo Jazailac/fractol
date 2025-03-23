@@ -6,7 +6,7 @@
 #    By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/20 03:48:12 by jazailac          #+#    #+#              #
-#    Updated: 2025/03/20 03:48:13 by jazailac         ###   ########.fr        #
+#    Updated: 2025/03/22 03:49:47 by jazailac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ CFLAGS = -Wall -Wextra -Werror
 SRCS = main.c \
        events.c \
        fractal_utils.c \
-       utils.c
+       utils.c \
+	   help.c 
 
 OBJS = $(SRCS:.c=.o)
 
