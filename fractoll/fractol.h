@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:48:06 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/23 02:50:01 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/23 07:26:24 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ typedef struct s_fractal
 	char		*name;
 	t_complex	min;
 	double		zoom;
-	double		offset_x;
-	double		offset_y;
 	t_complex	max;
 	t_complex	julia;
 	int			max_iterations;
@@ -69,6 +67,7 @@ double		ft_atof(char *str, double res);
 void		square_complex(t_complex *z, t_complex *c);
 int			cloe_window(t_fractal *fractal);
 void		fill_fractal(t_fractal *fractal);
+int ft_isnumeric(const char *str);
 int			print_usage_e(void);
 int			set_frcatal_name(int nbr, int ac, t_fractal *fractal, char **av);
 #endif

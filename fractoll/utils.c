@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:48:10 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/23 02:46:25 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/23 07:24:39 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,20 @@
 
 int	handle_key(int keycode, t_fractal *fractal);
 
-// int	create_color(int iterations, int max_iterations)
-// {
-// 	int	color;
-// 	int	r;
-// 	int	g;
-// 	int	b;
+int	create_color(int iterations, int max_iterations)
+{
+	int	color;
+	int	r;
+	int	g;
+	int	b;
 
-// 	if (iterations == max_iterations)
-// 		return (0x000000);
-// 	r = (iterations * 7) % 256;
-// 	g = (iterations * 11) % 256;
-// 	b = (iterations * 17) % 256;
-// 	color = (r << 16) | (g << 8) | b;
-// 	return (color);
-// }
-int create_color(int iterations, int max_iterations) {
-    if (iterations == max_iterations)
-        return 0x000000; // Black for points inside the set
-
-    // Smooth color gradient
-    double t = (double)iterations / max_iterations;
-    int r = (int)(9 * (1 - t) * t * t * t * 255);
-    int g = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
-    int b = (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
-
-    return (r << 16) | (g << 8) | b;
+	if (iterations == max_iterations)
+		return (0x000000);
+	r = (iterations * 3) % 256;
+	g = (iterations * 5) % 256;
+	b = (iterations * 8) % 256;
+	color = (r << 16) | (g << 8) | b;
+	return (color);
 }
 
 void	put_pixel(t_img *img, int x, int y, int color)
@@ -74,5 +62,7 @@ double	ft_atof(char *str, double res)
 			divider *= 10;
 		}
 	}
+	if (str[i] != '\0')
+		return(0);
 	return (res * sign / divider);
 }

@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 03:51:09 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/23 01:41:28 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/23 07:29:07 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	fill_fractal(t_fractal *fractal)
 	fractal->max.imag = 2.0;
 	fractal->max_iterations = 100;
 	if (!fractal->julia.real)
-		fractal->julia.real = -0.8;
+		fractal->julia.real = -0.745;
 	if (!fractal->julia.imag)
-		fractal->julia.imag = 0.156;
+		fractal->julia.imag = 0.1;
 }
 
 void	init_mlx(t_fractal *fractal)
@@ -64,6 +64,19 @@ void	init_mlx(t_fractal *fractal)
 		free(fractal->mlx);
 		return ;
 	}
+}
+
+int ft_isnumeric(const char *str)
+{
+    if (!str || !*str)
+		return (0);
+    while (*str)
+	{
+        if (!ft_isdigit(*str) && *str != '.' && *str != '-' && *str != '+')
+			return (0);
+        str++;
+    }
+    return (1);
 }
 
 void	init_fractal(t_fractal *fractal)
