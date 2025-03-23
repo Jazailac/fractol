@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:48:06 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/23 01:13:26 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/23 02:50:01 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <math.h>
 # include <stdlib.h>
 
-# define WIDTH 280           
-# define HEIGHT 280
+# define WIDTH 300           
+# define HEIGHT 300
 
 typedef struct s_complex
 {

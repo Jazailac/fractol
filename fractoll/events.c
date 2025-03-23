@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:47:58 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/23 01:45:45 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/23 02:42:46 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	zoom(t_fractal *fractal, int mouse_x, int mouse_y, double zoom_factor)
 	fractal->max.real = mouse_pos.real + mr_diff * zoom_factor;
 	fractal->max.imag = mouse_pos.imag + mi_diff * zoom_factor;
 	if (zoom_factor < 1.0 && fractal->max_iterations <= 2147483647)
-		fractal->max_iterations = (int)(fractal->max_iterations + 50);
+		fractal->max_iterations = (int)(fractal->max_iterations + 15);
 	else if (zoom_factor > 1.0 && fractal->max_iterations >= 100)
-		fractal->max_iterations -= 50;
+		fractal->max_iterations -= 25;
 }
 
 int	print_usage_e(void)
