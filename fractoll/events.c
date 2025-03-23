@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:47:58 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/23 02:42:46 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/23 08:53:56 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	print_usage_e(void)
 {
 	ft_putstr_fd("HOW TO USE THE PROGRAM ?\n\t", 2);
 	ft_putstr_fd("CHOOSE A SET : \n\t", 2);
-	ft_putstr_fd("\tFOR MANDELBROT TYPE './fractol 1'\n\t", 2);
-	ft_putstr_fd("\tFOR JULIA TYPE './fractol 2'\n\t", 2);
+	ft_putstr_fd("\tFOR MANDELBROT TYPE './fractol mandelbrot'\n\t", 2);
+	ft_putstr_fd("\tFOR JULIA TYPE './fractol julia'\n\t", 2);
 	ft_putstr_fd("IF YOU WANT JULIA WITH COSTUM PARAMS :\n\t", 2);
-	ft_putstr_fd("\tTYPE './fractol 2 [real] [imaginary]'\n", 2);
+	ft_putstr_fd("\tTYPE './fractol julia [real] [imaginary]'\n", 2);
 	return (1);
 }
