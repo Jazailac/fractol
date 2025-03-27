@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:47:58 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/23 08:53:56 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/26 09:56:16 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,15 @@
 
 int	handle_mouse(int button, int x, int y, t_fractal *fractal)
 {
-	t_complex	complex;
-
-	complex = handle_pixel(x, y, fractal);
-	if (button == 1)
+	if (button == 4)
 	{
 		zoom(fractal, x, y, fractal->zoom_x);
-		render_fractal(fractal);
+		optimize_rendering(fractal);
 	}
-	else if (button == 2)
+	else if (button == 5)
 	{
 		zoom(fractal, x, y, fractal->zoom_y);
-		render_fractal(fractal);
+		optimize_rendering(fractal);
 	}
 	return (0);
 }
@@ -35,9 +32,20 @@ int	handle_key(int keycode, t_fractal *fractal)
 	if (keycode == 53)
 	{
 		mlx_destroy_window(fractal->mlx, fractal->window);
-		free(fractal->name);
-		free(fractal->mlx);
+		if (fractal->name)
+			free(fractal->name);
+		if (fractal->mlx)
+			free(fractal->mlx);
 		exit(0);
+	}
+	else if (keycode == 15) 
+	{
+		fractal->min.real = -2.0;
+		fractal->min.imag = -2.0;
+		fractal->max.real = 2.0;
+		fractal->max.imag = 2.0;
+		fractal->max_iterations = 100;
+		optimize_rendering(fractal);
 	}
 	return (0);
 }
@@ -60,9 +68,11 @@ void	zoom(t_fractal *fractal, int mouse_x, int mouse_y, double zoom_factor)
 	fractal->max.real = mouse_pos.real + mr_diff * zoom_factor;
 	fractal->max.imag = mouse_pos.imag + mi_diff * zoom_factor;
 	if (zoom_factor < 1.0 && fractal->max_iterations <= 2147483647)
-		fractal->max_iterations = (int)(fractal->max_iterations + 15);
+	{
+		fractal->max_iterations = (int)(fractal->max_iterations + 3);
+	}
 	else if (zoom_factor > 1.0 && fractal->max_iterations >= 100)
-		fractal->max_iterations -= 25;
+		fractal->max_iterations -= 6;
 }
 
 int	print_usage_e(void)
@@ -72,6 +82,7 @@ int	print_usage_e(void)
 	ft_putstr_fd("\tFOR MANDELBROT TYPE './fractol mandelbrot'\n\t", 2);
 	ft_putstr_fd("\tFOR JULIA TYPE './fractol julia'\n\t", 2);
 	ft_putstr_fd("IF YOU WANT JULIA WITH COSTUM PARAMS :\n\t", 2);
-	ft_putstr_fd("\tTYPE './fractol julia [real] [imaginary]'\n", 2);
-	return (1);
+	ft_putstr_fd("\tTYPE './fractol julia [real] [imaginary]'\n\t", 2);
+	ft_putstr_fd("\tF.E './fractol julia 0.3 0.01'\n", 2);
+	exit (1);
 }

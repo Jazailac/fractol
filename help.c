@@ -6,10 +6,11 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 03:51:09 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/23 07:29:07 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/26 07:40:00 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "LIBFT/libft.h"
 #include "fractol.h"
 
 t_complex	handle_pixel(int x, int y, t_fractal *fractal)
@@ -21,7 +22,7 @@ t_complex	handle_pixel(int x, int y, t_fractal *fractal)
 	range_real = fractal->max.real - fractal->min.real;
 	range_imag = fractal->max.imag - fractal->min.imag;
 	complex.real = fractal->min.real + (double)x / WIDTH * range_real;
-	complex.imag = fractal->min.imag + (double)y / HEIGHT * range_imag;
+	complex.imag = fractal->max.imag - (double)y / HEIGHT * range_imag;
 	return (complex);
 }
 
@@ -34,10 +35,6 @@ void	fill_fractal(t_fractal *fractal)
 	fractal->max.real = 2.0;
 	fractal->max.imag = 2.0;
 	fractal->max_iterations = 100;
-	if (!fractal->julia.real)
-		fractal->julia.real = -0.745;
-	if (!fractal->julia.imag)
-		fractal->julia.imag = 0.1;
 }
 
 void	init_mlx(t_fractal *fractal)
@@ -66,17 +63,32 @@ void	init_mlx(t_fractal *fractal)
 	}
 }
 
-int ft_isnumeric(const char *str)
+int	ft_isnumeric(const char *str)
 {
-    if (!str || !*str)
+	int	i;
+	int	has_dot;
+	int	has_digit;
+
+	if (!str)
 		return (0);
-    while (*str)
+	i = (*str == '-' || *str == '+');
+	has_dot = 0;
+	has_digit = 0;
+	while (str[i])
 	{
-        if (!ft_isdigit(*str) && *str != '.' && *str != '-' && *str != '+')
+		if (str[i] == '.')
+		{
+			if (has_dot || !has_digit)
+				return (0);
+			has_dot = 1;
+		}
+		else if (!ft_isdigit(str[i]))
 			return (0);
-        str++;
-    }
-    return (1);
+		else
+			has_digit = 1;
+		i++;
+	}
+	return (has_digit);
 }
 
 void	init_fractal(t_fractal *fractal)

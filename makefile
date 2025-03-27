@@ -6,7 +6,7 @@
 #    By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/20 03:48:12 by jazailac          #+#    #+#              #
-#    Updated: 2025/03/23 07:04:40 by jazailac         ###   ########.fr        #
+#    Updated: 2025/03/26 08:47:06 by jazailac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 MLX_DIR = minilibx
 MLX = $(MLX_DIR)/libmlx.a
 
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -lm
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit 
 
 INCLUDES = -I. -I$(LIBFT_DIR) -I$(MLX_DIR)
 

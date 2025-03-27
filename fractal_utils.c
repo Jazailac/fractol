@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:48:02 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/23 06:03:18 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/26 07:37:06 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	draw(t_fractal *fractal, int x, int y)
 	}
 	else if (ft_strncmp(fractal->name, "julia", 5) == 0)
 	{
-		cmplx = handle_pixel(x, y, fractal);
 		iterations = julia_iter(cmplx, fractal->julia, fractal);
 	}
 	if (iterations == fractal->max_iterations)
@@ -89,6 +88,8 @@ void	render_fractal(t_fractal *fractal)
 	int	y;
 
 	y = 0;
+	ft_memset(fractal->img.addr, 0, 
+		WIDTH * HEIGHT * (fractal->img.bits_per_pixel / 8));
 	while (y < HEIGHT)
 	{
 		x = 0;

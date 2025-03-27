@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:48:06 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/23 07:26:24 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/26 09:56:34 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 
 # include "minilibx/mlx.h"
 # include "LIBFT/libft.h"
-# include <stdio.h>
 # include <unistd.h>
-# include <math.h>
 # include <stdlib.h>
 
-# define WIDTH 300           
-# define HEIGHT 300
+# define WIDTH  450
+# define HEIGHT 450	
 
 typedef struct s_complex
 {
@@ -54,7 +52,6 @@ typedef struct s_fractal
 
 }t_fractal;
 
-void		init_fractal(t_fractal *fractal);
 void		put_pixel(t_img *img, int x, int y, int color);
 void		render_fractal(t_fractal *fractal);
 int			create_color(int iterations, int max_iterations);
@@ -67,7 +64,10 @@ double		ft_atof(char *str, double res);
 void		square_complex(t_complex *z, t_complex *c);
 int			cloe_window(t_fractal *fractal);
 void		fill_fractal(t_fractal *fractal);
-int ft_isnumeric(const char *str);
+int			handle_args(char **av, int ac, t_fractal *fractal);
+int			ft_isnumeric(const char *str);
 int			print_usage_e(void);
-int			set_frcatal_name(int nbr, int ac, t_fractal *fractal, char **av);
+void		init_fractal(t_fractal *fractal);
+void		optimize_rendering(t_fractal *fractal);
+int			print_error(char *message);
 #endif
