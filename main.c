@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:48:08 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/26 09:58:10 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/26 06:27:52 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_julia(t_fractal *fractal, int ac, char **av)
 	if (ac == 4)
 	{
 		if (!ft_isnumeric(av[2]) || !ft_isnumeric(av[3]))
-			return (print_usage_e());
+			return (print_usage_e(fractal));
 		fractal->julia.real = ft_atof(av[2], 0);
 		fractal->julia.imag = ft_atof(av[3], 0);
 	}
@@ -58,7 +58,7 @@ int	check_julia(t_fractal *fractal, int ac, char **av)
 int	handle_arguments(int ac, char **av, t_fractal *fractal)
 {
 	if (ac < 2 || !av)
-		return (print_usage_e());
+		return (print_usage_e(fractal));
 	if (ft_strncmp("mandelbrot", av[1], 10) == 0
 		&& (ac == 2 && ft_strlen(av[1]) == 10))
 	{
@@ -75,16 +75,16 @@ int	handle_arguments(int ac, char **av, t_fractal *fractal)
 			return (print_error("RECHECK JULIA PARAMS\n"));
 		return (0);
 	}
-	return (print_usage_e());
+	return (print_usage_e(fractal));
 }
 
 int	main(int ac, char **av)
 {
 	t_fractal	fractal;
-	
+
 	if (ac < 2)
 	{
-		print_usage_e();
+		print_usage_e(&fractal);
 		return (1);
 	}
 	ft_memset(&fractal, 0, sizeof(t_fractal));

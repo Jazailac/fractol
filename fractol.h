@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:48:06 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/26 09:56:34 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/26 08:47:16 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int			cloe_window(t_fractal *fractal);
 void		fill_fractal(t_fractal *fractal);
 int			handle_args(char **av, int ac, t_fractal *fractal);
 int			ft_isnumeric(const char *str);
-int			print_usage_e(void);
+int			print_usage_e(t_fractal *fractal);
 void		init_fractal(t_fractal *fractal);
 void		optimize_rendering(t_fractal *fractal);
 int			print_error(char *message);

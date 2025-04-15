@@ -6,7 +6,7 @@
 /*   By: jazailac <jazailac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 03:47:58 by jazailac          #+#    #+#             */
-/*   Updated: 2025/03/26 09:56:16 by jazailac         ###   ########.fr       */
+/*   Updated: 2025/03/26 06:25:29 by jazailac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	zoom(t_fractal *fractal, int mouse_x, int mouse_y, double zoom_factor)
 		fractal->max_iterations -= 6;
 }
 
-int	print_usage_e(void)
+int	print_usage_e(t_fractal *fractal)
 {
 	ft_putstr_fd("HOW TO USE THE PROGRAM ?\n\t", 2);
 	ft_putstr_fd("CHOOSE A SET : \n\t", 2);
@@ -84,5 +84,9 @@ int	print_usage_e(void)
 	ft_putstr_fd("IF YOU WANT JULIA WITH COSTUM PARAMS :\n\t", 2);
 	ft_putstr_fd("\tTYPE './fractol julia [real] [imaginary]'\n\t", 2);
 	ft_putstr_fd("\tF.E './fractol julia 0.3 0.01'\n", 2);
+	if (fractal->name)
+		free(fractal->name);
+	if (fractal->mlx)
+		free(fractal->mlx);
 	exit (1);
 }
